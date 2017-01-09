@@ -10,33 +10,32 @@
   },
   "devDependencies": {
     "browser-sync": "latest",
-    "clean-css": "latest",
-    "imagemin-cli": "latest",
     "npm-run-all": "latest",
     "onchange": "latest",
-    "uglifyjs-folder": "latest"
+    "shx": "latest"
   },
   "config": {
-    "SOURCE": "app",
-    "DISTRIBUTION": "dist"
+    "source": "app",
+    "distribution": "dist"
   },
   "scripts": {
-    "clean": "rm -rf dist/*",
-    "postclean": "mkdir -p dist/css dist/js dist/img",
-    "minify:css": "cleancss app/css/*.css -o dist/css/main.min.css",
-    "build:css": "npm run minify:css && cp -r app/css/vendor/* dist/css",
-    "minify:js": "uglifyjs-folder app/js -o dist/js/main.min.js",
-    "build:js": "npm run minify:js && cp -r app/js/vendor/* dist/js",
-    "minify:img": "imagemin app/img/* -o dist/img",
-    "build:img": "npm run minify:img",
-    "build:html": "cp app/*.html dist",
-    "build": "run-s clean && run-p build:css build:js build:img build:html",
-    "serve": "browser-sync start --server dist --files dist --port 4000 --no-notify",
-    "watch:css": "onchange \"app/css\" -- npm run build:css",
-    "watch:js": "onchange \"app/js\" -- npm run build:js",
-    "watch:img": "onchange \"app/img\" -- npm run build:img",
-    "watch:html": "onchange \"app/*.html\" -- npm run build:html",
-    "watch": "run-p serve watch:css watch:js watch:img watch:html",
+    "clean": "shx rm -rf dist/*",
+    "postclean": "shx mkdir -p dist/css dist/js dist/img",
+    "app:css": "shx cat app/css/*.css > dist/css/app.css",
+    "vendor:css": "shx cat app/css/vendor/*.css > dist/css/vendor.min.css",
+    "build:css": "run-p app:css vendor:css",
+    "app:js": "shx cat app/js/*.js > dist/js/app.js",
+    "vendor:js": "shx cat app/js/vendor/*.js > dist/js/vendor.min.js",
+    "build:js": "run-p app:js vendor:js",
+    "build:img": "shx cp app/img/* dist/img",
+    "build:html": "shx cp app/*.html dist",
+    "build": "npm run clean && run-p build:css build:js build:img build:html",
+    "serve": "browser-sync start -s dist -f dist -b chrome --port 4000 --no-notify",
+    "watch:css": "onchange app/css -- npm run build:css",
+    "watch:js": "onchange app/js -- npm run build:js",
+    "watch:img": "onchange app/img -- npm run build:img",
+    "watch:html": "onchange app/*.html -- npm run build:html",
+    "watch": "run-p watch:css watch:js watch:img watch:html serve",
     "start": "npm run build && npm run watch"
   }
 }
