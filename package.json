@@ -1,0 +1,42 @@
+{
+  "name": "simple-npm-webapp-starter",
+  "version": "0.0.1",
+  "description": "Starter skeleton for new simple frontend projects.",
+  "main": "index.html",
+  "author": "Lukas Trumm",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "devDependencies": {
+    "browser-sync": "latest",
+    "clean-css": "latest",
+    "imagemin-cli": "latest",
+    "npm-run-all": "latest",
+    "onchange": "latest",
+    "uglifyjs-folder": "latest"
+  },
+  "config": {
+    "SOURCE": "app",
+    "DISTRIBUTION": "dist"
+  },
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "postclean": "mkdir -p dist/css dist/js dist/img",
+    "minify:css": "cleancss app/css/*.css -o dist/css/main.min.css",
+    "build:css": "npm run minify:css && cp -r app/css/vendor/* dist/css",
+    "minify:js": "uglifyjs-folder app/js -o dist/js/main.min.js",
+    "build:js": "npm run minify:js && cp -r app/js/vendor/* dist/js",
+    "minify:img": "imagemin app/img/* -o dist/img",
+    "build:img": "npm run minify:img",
+    "build:html": "cp app/*.html dist",
+    "build": "run-s clean && run-p build:css build:js build:img build:html",
+    "serve": "browser-sync start --server dist --files dist --port 4000 --no-notify",
+    "watch:css": "onchange \"app/css\" -- npm run build:css",
+    "watch:js": "onchange \"app/js\" -- npm run build:js",
+    "watch:img": "onchange \"app/img\" -- npm run build:img",
+    "watch:html": "onchange \"app/*.html\" -- npm run build:html",
+    "watch": "run-p serve watch:css watch:js watch:img watch:html",
+    "start": "npm run build && npm run watch"
+  }
+}
