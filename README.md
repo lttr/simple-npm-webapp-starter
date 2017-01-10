@@ -52,7 +52,7 @@ tasks, no `run` is needed.
 
 ## Tools
 
-- `npm` combined with command line tools is your  See (sources)[#Sources].
+- `npm` combined with command line tools is your  See (sources)[#sources].
 - `browser-sync` for seamlessly. [Command line docs](https://www.browsersync.io/docs/command-line).
 - `onchange` for detecting changes of files
 - `npm-run-all` for running tasks in parallel and `shx` for multiplatform shell commands
