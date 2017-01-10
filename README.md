@@ -9,31 +9,59 @@ tools for interactive development with HTML, CSS and JS. Additional tooling and
 structure can be added later.
 
 In the early 2017 the `es5` is still the main supported JavaScript standard 
-among web browsers. There are bazilion tools and options that are not needed for 
+among web browsers. There are bazillion tools and options that are not needed for 
 simple applications.
+
 
 ## Features
 
-- basic task runner
-- dependency manager
 - live preview
-- integrate external libraries
-- unify multiple css and js files
-- upload result via ftp
+- dependency manager
+- basic task runner
+- concats multiple css files into one
+- concats multiple javascript files into one
+
+-> _Everything on one page of configuration._
+
+
+## Quickstart
+
+Clone or download this repo. Cd into the folder.
+
+```
+npm install
+```
+downloads the dependencies and install tools.
+
+```
+npm start
+```
+builds the application, begins watching the files for changes and starts the 
+local server and opens browser with the app.
+
+## Tasks
+
+- `clean` cleans the destination directory and recreates necessary folders
+- `build` concats and copies styles, javascripts, images and html files
+- `serve` starts a local server with destination directory as a root directory
+- `watch` watches for changes and starts appropriate part of the build task
+- `start` combines `build`, `watch` and `serve`
+
+Run tasks with `npm run taskname`. `npm start` and `install` are default npm 
+tasks, no `run` is needed.
 
 ## Tools
 
-- `npm` combined with command line tools is just enough. See [how-to-use-npm-as-a-build-tool](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool).
-- `browser-sync` works seamlessly. [Command line docs](https://www.browsersync.io/docs/command-line).
-- `bower`
-- `clean-css`
-- `dploy`
+- `npm` combined with command line tools is your  See (sources)[#Sources].
+- `browser-sync` for seamlessly. [Command line docs](https://www.browsersync.io/docs/command-line).
+- `onchange` for detecting changes of files
+- `npm-run-all` for running tasks in parallel and `shx` for multiplatform shell commands
 
 ## Project structure
 
 ```
-❯ tree app dist
-app
+❯ tree app/ dist/
+app/
 ├── css
 │   ├── main.css
 │   └── vendor
@@ -45,23 +73,16 @@ app
     ├── main.js
     └── vendor
         └── bootstrap.min.js
-dist
+dist/
 ├── css
-│   ├── bootstrap.min.css
-│   └── main.min.css
+│   ├── app.css
+│   └── vendor.min.css
 ├── img
 │   └── npm.png
 ├── index.html
 └── js
-    ├── bootstrap.min.js
-    └── main.min.js
-```
-
-## Quickstart
-
-```
-npm install
-npm start
+    ├── app.js
+    └── vendor.min.js
 ```
 
 ## Non features
@@ -70,12 +91,15 @@ npm start
 - no frameworks
 - no tests
 
-_...however you can integrate any of these if you need._
+...however you can integrate any of these if you need.
 
 ## Sources
 
+Articles:
 - [why-npm-scripts](https://css-tricks.com/why-npm-scripts/)
 - [how-to-use-npm-as-a-build-tool](http://blog.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool)
+
+Github repos:
 - [npm-scripts-example](https://github.com/keithamus/npm-scripts-example)
 - [npm-build-tool](https://github.com/Caballerog/npm-build-tool)
 - [web-starter-kit](https://github.com/google/web-starter-kit)
